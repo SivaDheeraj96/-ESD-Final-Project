@@ -1,6 +1,7 @@
 package com.esd.app.pojo;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 @Table(name = "BusTrip")
 public class BusTrip {
 
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-mmm-yyy"); 
 	@Id
 	@GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -28,7 +30,7 @@ public class BusTrip {
 	@JoinColumn(name="routeId")
 	private BusRoute busRoute;
 
-	@Column(name = "sourceName", nullable = false)
+	@Column(name = "tripDate", nullable = false)
 	private Date tripDate;
 
 	public String getTripId() {
@@ -51,6 +53,9 @@ public class BusTrip {
 		return tripDate;
 	}
 
+	public String getStringTripDate() {
+		return DATE_FORMAT.format(tripDate);
+	}
 	public void setTripDate(Date tripDate) {
 		this.tripDate = tripDate;
 	}

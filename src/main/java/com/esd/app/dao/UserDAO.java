@@ -4,8 +4,6 @@ package com.esd.app.dao;
 import org.hibernate.query.Query;
 
 import org.hibernate.HibernateException;
-import org.hibernate.id.UUIDGenerator;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esd.app.exception.UserException;

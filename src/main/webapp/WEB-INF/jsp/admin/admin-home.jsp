@@ -4,16 +4,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> User Homepage</title>
+<title> Admin Homepage</title>
 <style type="text/css">
-	<%@include file="style.css" %>
+	<%@include file="../style.css" %>
 </style>
 </head>
 <body>
 	
 	<jsp:include page="header.jsp"/>
 	<div>
-		<h1>Hi ${user.firstName} ${user.lastName}, Welcome to Bus ticket Booking</h1>
+		<h1>Hi ${user.firstName} ${user.lastName}(Admin), Welcome to Bus ticket Booking</h1>
 	</div>
 </body>
 </html>

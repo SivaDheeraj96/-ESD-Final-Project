@@ -1,18 +1,16 @@
 package com.esd.app.controller;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.esd.app.dao.UserDAO;
 import com.esd.app.exception.UserException;
@@ -31,7 +29,7 @@ public class LoginController {
 		return "login-view";
 	}
 	@PostMapping("/login")
-	public String handleLogin(@ModelAttribute User user, BindingResult result, SessionStatus status, Model model) {
+	public String handleLogin(@ModelAttribute User user, BindingResult result, SessionStatus status, Model model, HttpServletRequest req) {
 		validator.validate(user, result);
 		if(result.hasErrors()) {
 			return "login-view";
@@ -48,9 +46,20 @@ public class LoginController {
 			e.printStackTrace();
 			return "login-view";
 		}
+		HttpSession session = req.getSession();
+		session.setAttribute("user", savedUser);
 		status.setComplete();
 		model.addAttribute("user", savedUser );
 		System.out.println("authentication success!!!");
-		return "user-home";
+		return savedUser.getRole() == 0?"user-home":"admin/admin-home";
+	}
+	
+	@GetMapping("/logout")
+	public String doLogout(HttpServletRequest req) {
+		HttpSession session = req.getSession(false);
+		session.removeAttribute("user");
+		session.invalidate();
+		System.out.println("invalidating session:"+session.getId());
+		return "login-view";
 	}
 }

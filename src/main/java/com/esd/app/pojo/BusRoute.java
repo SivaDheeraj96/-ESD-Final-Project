@@ -31,10 +31,10 @@ public class BusRoute {
 	@Column(name = "destinationName", nullable = false)
 	private String destinationName;
 	
-	@ElementCollection
-	@CollectionTable(name = "BusTrip", joinColumns = @JoinColumn(name = "tripId"))
-    @Column(name = "tripDate")
-	private List<Date> dates;
+//	@ElementCollection
+//	@CollectionTable(name = "BusTrip", joinColumns = @JoinColumn(name = "tripId"))
+//    @Column(name = "tripDate")
+//	private List<Date> dates;
 
 	public String getRouteId() {
 		return routeId;
@@ -60,12 +60,12 @@ public class BusRoute {
 		this.destinationName = destinationName;
 	}
 
-	public List<Date> getDates() {
-		return dates;
-	}
-
-	public void setDates(List<Date> dates) {
-		this.dates = dates;
-	}
+//	public List<Date> getDates() {
+//		return dates;
+//	}
+//
+//	public void setDates(List<Date> dates) {
+//		this.dates = dates;
+//	}
 	
 }
