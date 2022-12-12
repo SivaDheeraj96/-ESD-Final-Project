@@ -1,9 +1,12 @@
 package com.esd.app.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,17 +33,21 @@ public class SignUpController {
 		validator.validate(user, result);
 		
 		if(result.hasErrors()) {
+			List<ObjectError> errs = result.getAllErrors();
+			for(int i=0;i<errs.size();i++) {
+				System.out.println(errs.get(i).getCode() +":"+ errs.get(i).getDefaultMessage());
+			}
 			return "sign-up-view";
 		}
 		try {
 			User savedUser = userDAO.get(user.getEmail());
 			if(savedUser != null && savedUser.getEmail().equals(user.getEmail())) {
 				model.addAttribute("user_already_present", "Email is already registered! Please using sign In link to Sign In");
-				return "login-view";
+				return "sign-up-view";
 			}
 		} catch (UserException e) {
 			e.printStackTrace();
-			return "login-view";
+			return "sign-up-view";
 		}
 		try {
 			userDAO.create(user);

@@ -12,7 +12,7 @@
 </style>
 <script type="text/javascript">
 var printPage = function(e){
-	var printScope = document.getElementById('print-content').innerHTML;
+/* 	var printScope = document.getElementById('print-content').innerHTML;
 	
 	var print_window = window.open('', 'my div', 'height=400,width=600');
 	print_window.document.write('<html><head><title>Bus Ticket</title>');
@@ -21,7 +21,27 @@ var printPage = function(e){
 	print_window.document.write(printScope);
 	print_window.document.write('</body></html>');
 	print_window.print();
-	print_window.close();
+	print_window.close(); */
+	
+	const url='http://localhost:8080/app/booking/print';
+	var a = document.createElement("a");
+    a.setAttribute("download", "ticket.pdf");
+    a.setAttribute("href", url);
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+}
+
+var closePage = function(e){
+	window.location.href="http://localhost:8080/app/search";
+}
+
+var sendEmail = function(e){
+	const url='http://localhost:8080/app/booking/email';
+	const Http = new XMLHttpRequest();
+	Http.open("GET", url, false);
+	Http.send();
+	alert("email sent");
 }
 </script>
 </head>
@@ -57,8 +77,16 @@ var printPage = function(e){
 			<td>${trip.getStringTripDate()}</td>
 		</tr>
 		<tr>
-		<td class="ignore-border"><button class="book-btn" onclick="printPage(this)">Print</button></td>
-		<td class="ignore-border"><button class="book-btn">Email</button></td>
+			<td>Date of Travel:</td>
+			<td>${count}</td>
+		</tr>
+		<tr>
+			<td>Total Price:</td>
+			<td>USD ${count * trip.getPrice()}</td>
+		</tr>
+		<tr>
+		<td class="ignore-border"><button class="book-btn" onclick="printPage(this)">Print</button><button class="book-btn" onclick="sendEmail(this)">Email</button></td>
+		<td class="ignore-border"><button class="book-btn" onclick="closePage(this)">Close</button></td>
 		</tr>
 	</table>
 	</div>

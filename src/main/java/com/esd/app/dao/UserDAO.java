@@ -50,6 +50,20 @@ public class UserDAO extends DAO {
 	        }
 	    }
 
+	    public void update(User user) throws UserException {
+	    	 try {
+	             //save user object in the database
+	         	begin();
+	         	getSession().update(user);
+	         	commit();
+	         	
+	         } catch (HibernateException e) {
+	             rollback();
+	             //throw new AdException("Could not create user " + username, e);
+	             throw new UserException("Exception while updating user: " + e.getMessage());
+	         }
+	    }
+	    
 	    public void delete(User user) throws UserException {
 	    	 try {
 	             //save user object in the database

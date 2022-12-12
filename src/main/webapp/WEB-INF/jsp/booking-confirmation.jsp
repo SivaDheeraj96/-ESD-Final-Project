@@ -16,6 +16,7 @@ var showConfirmationPage = function(e){
 	const url='http://localhost:8080/app/booking/success';
 	window.location.href = url;
 }
+
 </script>
 </head>
 <body>
@@ -47,6 +48,14 @@ var showConfirmationPage = function(e){
 	<tr>
 		<td>Date of Travel:</td>
 		<td>${trip.getStringTripDate()}</td>
+	</tr>
+	<tr>
+		<td>Number of Seats:</td>
+		<td>${count}</td>
+	</tr>
+	<tr>
+		<td>Total Price:</td>
+		<td>USD ${count * trip.getPrice()}</td>
 	</tr>
 	<tr>
 	<td class="ignore-border"><button class="book-btn" onclick="window.history.back()">Back</button></td>

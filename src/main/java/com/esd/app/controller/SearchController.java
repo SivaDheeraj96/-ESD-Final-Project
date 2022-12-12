@@ -53,6 +53,10 @@ public class SearchController {
 		if(result.hasErrors()) {
 			return "search";
 		}
+		if(route.getSourceName().equalsIgnoreCase(route.getDestinationName())) {
+			model.addAttribute("routeError", "Destination can't be same as Source");
+			return "search";
+		}
 		BusRoute savedRoute;
 		try {
 			savedRoute = busRouteDAO.get(route.getSourceName(), route.getDestinationName());

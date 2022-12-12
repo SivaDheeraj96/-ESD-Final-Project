@@ -21,8 +21,8 @@
 				<td><label class="search-label">Destination</label></td>
 			</tr>
 			<tr>
-				<td><input type="text" name="sourceName" class="search-input" required placeholder="Source"/></td>
-				<td><input type="text" name="destinationName" class="search-input" required placeholder="Destination"/></td>
+				<td><input type="text" name="sourceName" class="search-input"  placeholder="Source"/></td>
+				<td><input type="text" name="destinationName" class="search-input" placeholder="Destination"/></td>
 				<td><input class="search-btn" type="submit" value="Search"/></td>
 			</tr>
 			<tr>
@@ -36,6 +36,7 @@
 		</table>
 	</div>
 	<div style="display:flex; justify-content:center;"><span style="color:red">${routeError}</span></div>
+	<div style="display:flex; justify-content:center;"><span style="color:red">${error}</span></div>
 	</form:form>
 </body>
 </html>

@@ -17,7 +17,8 @@ public class AppSecurity implements HandlerInterceptor {
    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String url = request.getRequestURI();
 		System.out.println("interceptor for url:"+url);
-		if(url.contains("/login")|| url.contains("/signup") || url.contains("/static")) {
+		if(url.contains("/login")|| url.contains("/signup") || url.contains("/static") || url.contains("/booking/email")) {
+			System.out.println("returned bypassed");
 			return true;
 		}
 		else {

@@ -2,7 +2,7 @@ body{
 	margin:0px;
 }
 header{
-	height: 10%;
+	height: 10vh;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -16,7 +16,6 @@ header{
 	width:100vw;
 }
 .logout{
-	float: right;
     padding: 1%;
     text-decoration: none;
     font-weight: bold;
@@ -27,21 +26,31 @@ header{
 .nav-container{
 	display: flex;
 	flex-direction: row;
+	height:100%;
 }
 .nav-option{
 	color: white;
-    padding: 4% 10% 4% 10%;
+    padding: 10%;
     text-decoration: none;
     font-weight: bold;
     background-color: #515151;
-    margin: 5%;
+    margin: 17%;
     white-space: nowrap;
+}
+.nav-option.right{
+    padding: 13%;
+    margin: 27%;
 }
 .nav-option:hover, logout:hover {
 	background-color: #6a6a6a;
 }
 .nav-option:active, logout:active {
 	background-color: #adadad;
+}
+
+.admin{
+    padding: 5%;
+    margin: 6%;
 }
 
 .search-label{
@@ -90,6 +99,7 @@ header{
 	
 .delete-icon{
 	float: right;
+	cursor: pointer;
 }
 
 .sign-up-container, .sign-in-container{
@@ -148,7 +158,7 @@ header{
 
 .error-msg{
 	color: red;
-    margin-left: 40%;
+    margin-left: 60%;
     white-space: nowrap;
 }
 .vertical-center{
@@ -184,4 +194,11 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+}
+.profile-pic{
+	width: 41px;
+    height: 42px;
+    border-radius: 53%;
+    padding: 0% !important;
+    margin: 0% !important;
 }

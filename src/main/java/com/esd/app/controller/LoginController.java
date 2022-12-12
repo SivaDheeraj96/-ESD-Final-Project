@@ -30,7 +30,7 @@ public class LoginController {
 	}
 	@PostMapping("/login")
 	public String handleLogin(@ModelAttribute User user, BindingResult result, SessionStatus status, Model model, HttpServletRequest req) {
-		validator.validate(user, result);
+		validator.validateLogin(user, result);
 		if(result.hasErrors()) {
 			return "login-view";
 		}

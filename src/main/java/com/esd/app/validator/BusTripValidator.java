@@ -18,8 +18,9 @@ public class BusTripValidator  implements Validator{
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tripDate", "tripDate-empty","Date Can't be empty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "busRoute", "busRoute-empty","busRoute Can't be empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "busRoute", "busRoute-empty","Bus Route can't be empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "tripDate", "tripDate-empty","Date can't be empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "price", "price","Price can't be empty");
 	}
 
 }

@@ -3,6 +3,11 @@ package com.esd.app.dao;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Component;
@@ -17,6 +22,26 @@ public class BusTripDAO extends DAO{
 	public BusTripDAO() {
 		
 	}
+	
+	public List<BusTrip> getAllTrips() throws RouteException {
+	   	 try {
+	        	begin();
+	        	CriteriaBuilder builder = getSession().getCriteriaBuilder();
+	        	CriteriaQuery<BusTrip> crit = builder.createQuery(BusTrip.class);
+	        	Root<BusTrip> root = crit.from(BusTrip.class);
+	        	crit.select(root).orderBy(builder.asc(root.get("tripDate")));
+	        	Query<BusTrip> query = getSession().createQuery(crit);
+	        	
+	        	List<BusTrip> trips = (List<BusTrip>)query.getResultList();
+	        	commit();
+	        	return trips;
+	        } catch (HibernateException e) {
+	            rollback();
+	            throw new RouteException("Could not get all trips", e);
+	        }
+	   	
+	   }
+	
 	
 	public List<BusTrip> get(BusRoute route) throws RouteException {
    	 try {

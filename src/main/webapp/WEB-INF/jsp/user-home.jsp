@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
 <body>
 	
 	<jsp:include page="header.jsp"/>
-	<div>
+	<div class="center-content vertical-center">
 		<h1>Hi ${user.firstName} ${user.lastName}, Welcome to Bus ticket Booking</h1>
 	</div>
 </body>

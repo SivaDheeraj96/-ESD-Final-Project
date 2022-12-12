@@ -45,6 +45,10 @@ public class User {
 	@Column(name = "role")
 	private int role;
 	
+	@Column(name = "profilePic")
+	private String profilePic;
+	
+	
 	@OneToMany(mappedBy="user")
 	private List<Booking> bookings;
 	
@@ -84,4 +88,11 @@ public class User {
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	public String getProfilePic() {
+		return profilePic;
+	}
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+	
 }

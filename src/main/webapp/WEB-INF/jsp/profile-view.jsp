@@ -13,21 +13,26 @@
 </head>
 <body>
 <div>
-<img class="login-background" src='<c:url value="/static/buspic4.png"></c:url>'/>
-	<div class="white-background">
-	<div class="sign-up-container">
-		<h1>Create Account</h1>
-		<form:form modelAttribute="user" method="post" action="/app/signup">
+	<jsp:include page="header.jsp"></jsp:include>
+	<div class="center-content vertical-center">
+		<h1>Your Profile</h1>
+		<form:form modelAttribute="user" enctype="multipart/form-data" method="post" action="/app/profile">
 			<table>
+			<tr>
+				<td><label class="label-el">Profile Pic:</label></td>
+				<td><input class="input-el" name="profile_pic" type='file' placeholder="First Name" accept="image/png, image/jpeg"/></td>
+				<td><form:errors class="error-msg" path="email"/></td>
+			</tr>
+			
 			<tr>
 				<td><label class="label-el">First Name:</label></td>
 				<td><input class="input-el" name="firstName" type='text' placeholder="First Name" value="${user.getFirstName()}"/></td>
-				<td><form:errors class="error-msg" path="firstName"/></td>
+				<td><form:errors class="error-msg" path="email"/></td>
 			</tr>
 			<tr>
 				<td><label class="label-el" >Last Name:</label></td>
 				<td><input class="input-el" name="lastName" type='text' placeholder="Last Name" value="${user.getLastName()}"/></td>
-				<td><form:errors class="error-msg" path="lastName"/></td>
+				<td><form:errors class="error-msg" path="email"/></td>
 			</tr>
 			<tr>
 				<td><label class="label-el" >Email</label></td>
@@ -36,12 +41,12 @@
 			</tr>
 			<tr>
 				<td><label class="label-el" >Password:</label></td>
-				<td><input class="input-el" name="password" type='password' placeholder="Password" value="${user.getPassword()}"/></td>
+				<td><input class="input-el" name="password" type='password' placeholder="Password" value="${user.getPassword()}" /></td>
 				<td><form:errors class="error-msg" path="password"/></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><p style="color:red">${user_already_present}</p></td>
+				<td><p style="color:green">${success}</p></td>
 			</tr>
 			<tr>
 				<td></td>
@@ -49,11 +54,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><input class="sign-up-btn card" type='submit' value="Create Account"/></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><a href="/app/login">Sign In</a></td>
+				<td><input class="sign-up-btn card" type='submit' value="Update Profile"/></td>
 			</tr>
 			</table>
 		</form:form>

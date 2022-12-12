@@ -1,8 +1,8 @@
 package com.esd.app.pojo;
 
-import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -14,10 +14,12 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 
+
 @Entity
 @Component
 @Table(name = "Booking")
 public class Booking {
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMM-yyyy");
 	@Id
 	@GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -31,6 +33,8 @@ public class Booking {
 	private User user;
 
 	private Date bookingDate;
+	
+	private Integer count;
 	
 	public String getBookingId() {
 		return bookingId;
@@ -64,5 +68,17 @@ public class Booking {
 		this.bookingDate = bookingDate;
 	}
 
+	public String getStringBookingDate() {
+		return DATE_FORMAT.format(bookingDate);
+	}
 
+	public Integer getCount() {
+		return count;
+	}
+
+	public void setCount(Integer count) {
+		this.count = count;
+	}
+
+	
 }

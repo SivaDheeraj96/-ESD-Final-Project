@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,26 +53,43 @@ public class TripController {
 	}
 	
 	private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+	
 	@PostMapping("/admin/trip/add")
-	public String handleRouteAdminPage(SessionStatus status, Model model, HttpServletRequest req) {
+	public String handleRouteAdminPage(@ModelAttribute BusTrip _trip, BindingResult result, SessionStatus status, Model model, HttpServletRequest req) {
 		BusTrip trip = new BusTrip();
+		
 		String routeId = (String)req.getParameter("busRoute");
+		BusRoute route;
 		try {
-			System.out.println("routeid:"+routeId);
-			BusRoute route = busRouteDAO.get(routeId);
+			route = busRouteDAO.get(routeId);
 			System.out.println(route.getDestinationName());
 			trip.setBusRoute(route);
-			trip.setTripDate(format.parse(req.getParameter("date")));
-		} catch (RouteException e) {
-			e.printStackTrace();
+			trip.setTripDate(format.parse(req.getParameter("tripDate")));
+			trip.setPrice(Integer.parseInt(req.getParameter("price")));
+		} catch (RouteException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			model.addAttribute("tripError", "Error while parsing date. Please try again");
+			return "admin/add-bus-trip";
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		    model.addAttribute("tripError", "Error while parsing date. Please try again");
+			model.addAttribute("tripError", "Error while parsing date. Please try again");
 			return "admin/add-bus-trip";
 		}
-//		busTripValidator.validate(trip, result);
-//		
-//		if(result.hasErrors()) {
+		
+//		String routeId = (String)req.getParameter("busRoute");
+//		try {
+//			System.out.println("routeid:"+routeId);
+//			BusRoute route = busRouteDAO.get(routeId);
+//			System.out.println(route.getDestinationName());
+//			trip.setBusRoute(route);
+//			trip.setTripDate(format.parse(req.getParameter("date")));
+//		} catch (RouteException e) {
+//			e.printStackTrace();
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		    model.addAttribute("tripError", "Error while parsing date. Please try again");
 //			return "admin/add-bus-trip";
 //		}
 		
@@ -100,5 +120,35 @@ public class TripController {
 		model.addAttribute("created","Successfully added Trip");
 		System.out.println("Trip created");
 		return "admin/add-bus-trip";
+	}
+	
+	@GetMapping("/admin/trip/view")
+	public String showTripAdminPage(Model model) {
+		try {
+			model.addAttribute("trips", busTripDAO.getAllTrips());
+		} catch (RouteException e) {
+			model.addAttribute("tripError", "Couldn't get all routes");
+			e.printStackTrace();
+		}
+		return "admin/view-bus-trip";
+	}
+	
+	@DeleteMapping("/admin/trip")
+	public String deleteTrip(HttpServletRequest req, Model model, SessionStatus status) {
+		System.out.println("inside delete");
+		try {
+			String tripId = req.getParameter("tripId");
+			System.out.println("tripid:"+tripId);
+			BusTrip saveTrip = busTripDAO.get(tripId);
+			busTripDAO.delete(saveTrip);
+			model.addAttribute("trips", busTripDAO.getAllTrips());
+		} catch (RouteException e) {
+			model.addAttribute("error", "Unable to delete as there are bookings on the trip");
+			e.printStackTrace();
+		}
+		System.out.println("deleted");
+		status.setComplete();
+		
+		return "admin/view-bus-trip";
 	}
 }
